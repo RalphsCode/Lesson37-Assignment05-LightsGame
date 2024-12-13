@@ -90,31 +90,34 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   }
 
   // if the game is won, just show a winning msg & render nothing else
- 
-      // {hasWon() ? (
-      //   <h3>Congratulations you won!</h3>
-      // ) : ( 
-
-      // TODO
-      console.log("Just before return statement, Board:", board)
-      // make board
-      return (
+  return (
+    <div>
+      {hasWon() ? (
         <div>
-      <h2>RalphsCode: LIGHTS GAME</h2>
-      <p>Board:</p>
-      <table align="center" style={{ border: '1px solid black' }}>
-        <tbody>
-          {board.map((row, rowIndex) => (
-            <tr key={rowIndex} style={{ border: '1px solid black' }}>
-              {row.map((cell, colIndex) => (
-                <td key={colIndex} style={{ border: '1px solid black' }}>{cell ? 'O' : '-'}</td>
+        <h2>RalphsCode: LIGHTS GAME</h2>
+        <h3>Congratulations you won!</h3>
+        </div>
+      ) : (
+        <div>
+          <h2>RalphsCode: LIGHTS GAME</h2>
+          <p>Board:</p>
+          <table align="center" style={{ border: '1px solid black' }}>
+            <tbody>
+              {board.map((row, rowIndex) => (
+                <tr key={rowIndex} style={{ border: '1px solid black' }}>
+                  {row.map((cell, colIndex) => (
+                    <td key={colIndex} style={{ border: '1px solid black' }}>
+                      {cell ? 'O' : '-'}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
-  )
+  );
   // TODO
 }
 
