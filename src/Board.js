@@ -50,16 +50,21 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
       initialBoard.push(newRow);
     }
 
-    console.log("In createBoard & Created board:", initialBoard);
-
     // TODO: create array-of-arrays of true/false values
     return initialBoard;
   }
 
+
+  /** checks that there is still at least one light 
+   * in off (false) status.
+   * returns true if all lights are on, indicating 
+   * game is over.
+   */
   function hasWon() {
     // TODO: check the board in state to determine whether the player has won.
     for (let row of board) {
       for (let cell of row) {
+        // check for a light in the off (false) state
         if (cell === false) {
           return false;
         };
@@ -93,21 +98,24 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   return (
     <div>
       {hasWon() ? (
+        // if all lights are on, game is over
         <div>
         <h2>RalphsCode: LIGHTS GAME</h2>
         <h3>Congratulations you won!</h3>
         </div>
       ) : (
         <div>
+          {/* If the game is not over, display the board */}
           <h2>RalphsCode: LIGHTS GAME</h2>
           <p>Board:</p>
           <table align="center" style={{ border: '1px solid black' }}>
             <tbody>
               {board.map((row, rowIndex) => (
-                <tr key={rowIndex} style={{ border: '1px solid black' }}>
+                <tr key={rowIndex} style={{ border: '1px solid black', height: '30px' }}>
                   {row.map((cell, colIndex) => (
-                    <td key={colIndex} style={{ border: '1px solid black' }}>
-                      {cell ? 'O' : '-'}
+                    <td key={colIndex} style={{ border: '1px solid black', width: '30px'}}>
+                      {/* {cell ? 'O' : '-'} */}
+                      <Cell coords={{ rowIndex, colIndex}} isLit={cell ? true : false} />
                     </td>
                   ))}
                 </tr>
