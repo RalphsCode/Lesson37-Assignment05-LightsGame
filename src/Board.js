@@ -33,13 +33,41 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
     let initialBoard = [];
+    /** return true or false randomly */
+    function randomTrueFalse() {
+      return Math.random() < 0.5;
+    }
+    // Loop for the number of rows 
+    for (let i = 0; i < nrows; i++) {
+        // Create a new row
+        const newRow = [];
+      
+        for (let j=0; j<ncols; j++){
+        // Fill the row's columns with random true/false 
+        newRow.push(randomTrueFalse());
+      }
+      // Push the new row into the initialBoard array
+      initialBoard.push(newRow);
+    }
+
+    console.log("In createBoard & Created board:", initialBoard);
+
     // TODO: create array-of-arrays of true/false values
     return initialBoard;
   }
 
   function hasWon() {
     // TODO: check the board in state to determine whether the player has won.
-  }
+    for (let row of board) {
+      for (let cell of row) {
+        if (cell === false) {
+          return false;
+        };
+      }
+    }
+      return true; 
+  };
+
 
   function flipCellsAround(coord) {
     setBoard(oldBoard => {
@@ -62,11 +90,31 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   }
 
   // if the game is won, just show a winning msg & render nothing else
+ 
+      // {hasWon() ? (
+      //   <h3>Congratulations you won!</h3>
+      // ) : ( 
 
-  // TODO
-
-  // make table board
-
+      // TODO
+      console.log("Just before return statement, Board:", board)
+      // make board
+      return (
+        <div>
+      <h2>RalphsCode: LIGHTS GAME</h2>
+      <p>Board:</p>
+      <table align="center" style={{ border: '1px solid black' }}>
+        <tbody>
+          {board.map((row, rowIndex) => (
+            <tr key={rowIndex} style={{ border: '1px solid black' }}>
+              {row.map((cell, colIndex) => (
+                <td key={colIndex} style={{ border: '1px solid black' }}>{cell ? 'O' : '-'}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
   // TODO
 }
 
