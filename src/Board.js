@@ -77,6 +77,10 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
   function flipCellsAround(coord) {
     setBoard(oldBoard => {
       const [y, x] = coord.split("-").map(Number);
+      
+      // TODO: Make a (deep) copy of the oldBoard
+
+      const boardCopy = oldBoard.map(row => [...row]);
 
       const flipCell = (y, x, boardCopy) => {
         // if this coord is actually on board, flip it
@@ -86,11 +90,22 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
         }
       };
 
-      // TODO: Make a (deep) copy of the oldBoard
 
       // TODO: in the copy, flip this cell and the cells around it
 
+      console.log("Flipping cells around:", y, x);
+      console.log("Board before flipping:", boardCopy);
+      
+      flipCell(y, x, boardCopy);
+      flipCell(y, x - 1, boardCopy);
+      flipCell(y, x + 1, boardCopy);
+      flipCell(y - 1, x, boardCopy);
+      flipCell(y + 1, x, boardCopy);
+
+      console.log("Board after flipping:", boardCopy);
+
       // TODO: return the copy
+      return boardCopy
     });
   }
 
@@ -111,11 +126,10 @@ function Board({ nrows, ncols, chanceLightStartsOn }) {
           <table align="center" style={{ border: '1px solid black' }}>
             <tbody>
               {board.map((row, rowIndex) => (
-                <tr key={rowIndex} style={{ border: '1px solid black', height: '30px' }}>
+                <tr key={rowIndex} style={{ border: '1px solid black'}}>
                   {row.map((cell, colIndex) => (
-                    <td key={colIndex} style={{ border: '1px solid black', width: '30px'}}>
-                      {/* {cell ? 'O' : '-'} */}
-                      <Cell coords={{ rowIndex, colIndex}} isLit={cell ? true : false} />
+                    <td key={colIndex} style={{ border: '1px solid black'}}>
+                      <Cell coord={`${rowIndex}-${colIndex}`} isLit={cell ? true : false} flipCellsAroundMe={evt => flipCellsAround(`${rowIndex}-${colIndex}`)} />
                     </td>
                   ))}
                 </tr>
